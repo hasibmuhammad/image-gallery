@@ -79,14 +79,16 @@ const ImageGallery = ({ images, setImages }) => {
                 )}
                 {selectedImages.length === 0 && <h1>Gallery</h1>}
               </div>
-              <button className="text-red-400" onClick={handleDelete}>
-                {/* Handling the 's' after file when more than 1 item is selected */}
-                {`Delete File${
-                  selectedImages.length > 0 && selectedImages.length !== 1
-                    ? "s"
-                    : ""
-                }`}
-              </button>
+              {selectedImages.length > 0 && (
+                <button className="text-red-400" onClick={handleDelete}>
+                  {/* Handling the 's' after file when more than 1 item is selected */}
+                  {`Delete File${
+                    selectedImages.length > 0 && selectedImages.length !== 1
+                      ? "s"
+                      : ""
+                  }`}
+                </button>
+              )}
             </div>
             {/* Applying grid to show the images  */}
             <div className="max-w-4xl mx-auto grid grid-cols-5 gap-4 px-10">
