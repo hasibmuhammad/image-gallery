@@ -1,4 +1,4 @@
-# React + Vite
+# Image Gallery using Reactjs
 
 ## Description:
 
