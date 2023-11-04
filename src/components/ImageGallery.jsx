@@ -7,27 +7,29 @@ const ImageGallery = ({ images, setImages }) => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  //   When the image is selected it is being stored to selectedImage state with a duplicate item check
-  const handleImageSelect = (index) => {
-    const isSelected = selectedImages.includes(index);
+  // When the image is selected, it is being stored to selectedImage state with a duplicate item check
+  const handleImageSelect = (selectedImage) => {
+    const isSelected = selectedImages.some((image) => image === selectedImage);
     if (isSelected) {
-      setSelectedImages((prev) => prev.filter((item) => item !== index));
+      setSelectedImages((prev) =>
+        prev.filter((image) => image !== selectedImage)
+      );
     } else {
-      setSelectedImages((prev) => [...prev, index]);
+      setSelectedImages((prev) => [...prev, selectedImage]);
     }
   };
 
-  //   To set overlay conditionally setting the state on mouse enter
+  // To set overlay conditionally setting the state on mouse enter
   const handleMouseEnter = (index) => {
     setHoveredIndex(index);
   };
 
-  //   To set overlay conditionally setting the state on mouse leave
+  // To set overlay conditionally setting the state on mouse leave
   const handleMouseLeave = () => {
     setHoveredIndex(null);
   };
 
-  //   When dragging ends -> this handler is being used for handling the dragging of react-beautiful-dnd
+  // When dragging ends -> this handler is being used for handling the dragging of react-beautiful-dnd
   const onDragEnd = (result) => {
     if (!result.destination) return;
 
@@ -38,22 +40,20 @@ const ImageGallery = ({ images, setImages }) => {
     setImages(reorderedImages);
   };
 
-  //   After selecting the images to delete
+  // After selecting the images to delete
   const handleDelete = () => {
     const afterDelImages = images.filter(
-      (image, index) => !selectedImages.includes(index)
+      (image) => !selectedImages.includes(image)
     );
 
     setImages(afterDelImages);
 
-    // reseting the state to empty array after the new images are set after delete
+    // resetting the state to an empty array after the new images are set after delete
     setSelectedImages([]);
   };
 
   return (
-    // DragDropContext from react-beautiful-dnd
     <DragDropContext onDragEnd={onDragEnd}>
-      {/* Droppable component from react-beautiful-dnd to make sortable gallery */}
       <Droppable droppableId="image-gallery" direction="horizontal">
         {(provided) => (
           <div
@@ -68,8 +68,6 @@ const ImageGallery = ({ images, setImages }) => {
                     <span className="text-blue-500 text-2xl">
                       <BsFillCheckSquareFill />
                     </span>
-
-                    {/* Handling the 's' after file when more than 1 item is selected */}
                     <span>{`${selectedImages.length} file${
                       selectedImages.length > 0 && selectedImages.length !== 1
                         ? "s"
@@ -81,7 +79,6 @@ const ImageGallery = ({ images, setImages }) => {
               </div>
               {selectedImages.length > 0 && (
                 <button className="text-red-400" onClick={handleDelete}>
-                  {/* Handling the 's' after file when more than 1 item is selected */}
                   {`Delete File${
                     selectedImages.length > 0 && selectedImages.length !== 1
                       ? "s"
@@ -90,15 +87,13 @@ const ImageGallery = ({ images, setImages }) => {
                 </button>
               )}
             </div>
-            {/* Applying grid to show the images  */}
             <div className="max-w-4xl mx-auto grid grid-cols-5 gap-4 px-10">
               {images.map((image, idx) => (
                 <Draggable key={idx} draggableId={`image-${idx}`} index={idx}>
                   {(provided) => (
-                    // using first: to select the first image to set as featured image
                     <div
                       className={`first:col-span-2 first:row-span-2 relative group ${
-                        selectedImages.includes(idx)
+                        selectedImages.includes(image)
                           ? "border border-blue-500 rounded-md "
                           : ""
                       }`}
@@ -108,18 +103,16 @@ const ImageGallery = ({ images, setImages }) => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      {/* Conditionally showing the checkbox only if the item is selected will be visible as checked, others will be unchecked and hiddedn checkbox */}
                       <input
                         type="checkbox"
-                        checked={selectedImages.includes(idx)}
-                        onChange={() => handleImageSelect(idx)}
-                        className={`absolute top-2 left-2 z-10  group-hover:opacity-100 transition-opacity duration-300 cursor-pointer ${
-                          selectedImages.includes(idx)
+                        checked={selectedImages.includes(image)}
+                        onChange={() => handleImageSelect(image)}
+                        className={`absolute top-2 left-2 z-10 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer ${
+                          selectedImages.includes(image)
                             ? "opacity-1"
                             : "opacity-0"
                         }`}
                       />
-                      {/* Calling the single image component with props image and key(key helps virtual dom to update efficeintly) */}
                       <Image key={idx} image={image} />
                       {hoveredIndex === idx && (
                         <div className="overlay absolute inset-0 bg-black opacity-50 rounded-md"></div>
@@ -136,4 +129,5 @@ const ImageGallery = ({ images, setImages }) => {
     </DragDropContext>
   );
 };
+
 export default ImageGallery;
