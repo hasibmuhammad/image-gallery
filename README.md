@@ -16,6 +16,7 @@
    - The feature image is larger than other images of the gallery.
 
 **Live Demo:**
+[Demo](https://react-image-gallery.surge.sh)
 
 **Technology Used**
 
