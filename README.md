@@ -14,7 +14,8 @@
 4. **Setting Feature Image:**
    - User can select or sort any image to make it feature image.
    - The feature image is larger than other images of the gallery.
-5. ## **Live Demo:**
+
+**Live Demo:**
 
 **Technology Used**
 
