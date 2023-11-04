@@ -15,3 +15,9 @@
    - User can select or sort any image to make it feature image.
    - The feature image is larger than other images of the gallery.
 5. ## **Live Demo:**
+
+**Technology Used**
+
+- React Js
+- Tailwind CSS
+- react-beautiful-dnd

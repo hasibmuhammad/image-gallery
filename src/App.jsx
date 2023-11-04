@@ -2,6 +2,7 @@ import { useState } from "react";
 import ImageGallery from "./components/ImageGallery";
 
 function App() {
+  // seting the images state with the lcoal images
   const [images, setImages] = useState([
     "./images/image-1.webp",
     "./images/image-2.webp",
@@ -19,6 +20,7 @@ function App() {
   return (
     <>
       <div className="max-w-full mx-auto my-6 px-4 sm:px-8 md:px-10">
+        {/* Passing the images and setImages as props to the ImageGallery Component */}
         <ImageGallery images={images} setImages={setImages} />
       </div>
     </>
